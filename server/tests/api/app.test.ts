@@ -12,6 +12,14 @@ describe('Express API foundation', () => {
     expect(response.body).toEqual({ success: true, data: { status: 'ok' } });
   });
 
+  test('allows the external image host used by the client', async () => {
+    const response = await request(createApp()).get('/api/v1/health');
+
+    expect(response.headers['content-security-policy']).toContain(
+      "img-src 'self' data: https://images.unsplash.com",
+    );
+  });
+
   test('reports database readiness when the configured database responds', async () => {
     const queries: string[] = [];
     const database = {

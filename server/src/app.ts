@@ -28,7 +28,13 @@ export function createApp(options: CreateAppOptions = {}) {
   const app = express();
 
   app.disable('x-powered-by');
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'],
+      },
+    },
+  }));
   app.use(cors({
     origin: config.clientOrigin,
     credentials: true,
