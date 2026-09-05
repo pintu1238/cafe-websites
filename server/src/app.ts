@@ -1,6 +1,6 @@
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import express, { type Router } from 'express';
+import express, { type RequestHandler, type Router } from 'express';
 import * as rateLimitModule from 'express-rate-limit';
 import * as helmetModule from 'helmet';
 import { pinoHttp } from 'pino-http';
@@ -12,8 +12,8 @@ import { notFound } from './middleware/not-found.js';
 import { requestId } from './middleware/request-id.js';
 import { logger } from './utils/logger.js';
 
-const rateLimit = rateLimitModule.default;
-const helmet = helmetModule.default;
+const rateLimit = rateLimitModule.default as unknown as (options?: unknown) => RequestHandler;
+const helmet = helmetModule.default as unknown as (options?: unknown) => RequestHandler;
 
 export type CreateAppOptions = {
   config?: AppConfig;
