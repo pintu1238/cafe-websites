@@ -1,3 +1,8 @@
+import express from 'express';
 import { createVercelApp } from '../server/src/vercel.js';
 
-export default createVercelApp();
+void express;
+
+const app = createVercelApp();
+
+export default app;
