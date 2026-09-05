@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "other",
+  "buildCommand": "npm run vercel-build",
+  "rewrites": [
+    {
+      "source": "/((?!api/v1(?:/|$)).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

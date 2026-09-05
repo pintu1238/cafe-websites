@@ -2,3 +2,4 @@
 \i migrations/001_initial_schema.sql
 \i migrations/002_authentication_extensions.sql
 \i migrations/003_email_verification.sql
+\i migrations/004_cafeteria_discovery.sql

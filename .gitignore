@@ -1,0 +1,14 @@
+node_modules/
+dist/
+client/dist/
+server/dist/
+public/
+.env
+.env.*
+!.env.example
+coverage/
+*.log
+.DS_Store
+*.tsbuildinfo
+client/vite.config.js
+client/vite.config.d.ts

@@ -18,6 +18,9 @@ export type OrderStatus = (typeof orderStatuses)[number];
 export const shopStatuses = ['PENDING', 'APPROVED', 'REJECTED', 'SUSPENDED', 'CLOSED'] as const;
 export type ShopStatus = (typeof shopStatuses)[number];
 
+export const shopPriceRanges = ['BUDGET', 'MID', 'PREMIUM'] as const;
+export type ShopPriceRange = (typeof shopPriceRanges)[number];
+
 export type UserRecord = {
   id: string;
   fullName: string;
@@ -113,6 +116,12 @@ export type ShopRecord = {
   rating: number;
   totalReviews: number;
   estimatedPreparationTime: number;
+  openingTime?: string;
+  closingTime?: string;
+  distanceKm?: number;
+  priceRange?: ShopPriceRange;
+  cuisineCategories?: string[];
+  activeOffersCount?: number;
 };
 
 export type MenuVariant = {
@@ -161,7 +170,11 @@ export type ShopListFilters = {
   search?: string;
   openOnly?: boolean;
   category?: string;
-  sort?: 'popular' | 'rating' | 'preparation' | 'newest';
+  minRating?: number;
+  maxDistanceKm?: number;
+  priceRange?: ShopPriceRange;
+  offersOnly?: boolean;
+  sort?: 'popular' | 'rating' | 'distance' | 'preparation' | 'newest';
   status?: 'APPROVED';
 };
 
@@ -175,6 +188,47 @@ export type MenuFilters = {
 export type ShopRepository = {
   list(filters: ShopListFilters): Promise<{ items: ShopRecord[]; pagination: Pagination }>;
   findPublicBySlug(slug: string): Promise<ShopRecord | null>;
+};
+
+export type ReviewRecord = {
+  id: string;
+  shopId: string;
+  shopSlug?: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: Date;
+};
+
+export type OfferRecord = {
+  id: string;
+  shopId: string;
+  shopSlug: string;
+  shopName: string;
+  title: string;
+  description: string;
+  discountPercent: number | null;
+  code: string | null;
+  startsAt: Date;
+  endsAt: Date | null;
+};
+
+export type FavoriteRecord = {
+  shopId: string;
+  shopSlug: string;
+  shopName: string;
+  createdAt: Date;
+};
+
+export type DiscoveryRepository = {
+  listCategories(): Promise<Array<{ slug: string; name: string; imageUrl: string | null }>>;
+  listReviews(slug: string, input: { page: number; limit: number }): Promise<{ items: ReviewRecord[]; pagination: Pagination }>;
+  upsertReview(input: { slug: string; userId: string; rating: number; comment: string }): Promise<ReviewRecord>;
+  listOffers(slug?: string): Promise<OfferRecord[]>;
+  listFavorites(userId: string): Promise<FavoriteRecord[]>;
+  addFavorite(userId: string, shopId: string): Promise<void>;
+  removeFavorite(userId: string, shopId: string): Promise<void>;
 };
 
 export type MenuRepository = {
