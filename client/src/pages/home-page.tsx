@@ -9,8 +9,9 @@ import { useAuth } from '../features/auth/auth-provider';
 import { useAddCartItem } from '../features/cart/hooks';
 import { useShop, useShops } from '../features/shops/hooks';
 import { getApiError } from '../lib/errors';
+import { unsplashImage } from '../lib/image-url';
 
-const image = (id: string, width = 1000) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=86`;
+const image = unsplashImage;
 const categories = [['All', 'all', '◈'], ['Breakfast', 'breakfast', '🍳'], ['North Indian', 'north-indian', '🥘'], ['South Indian', 'south-indian', '🥙'], ['Chinese', 'chinese', '🍜'], ['Snacks', 'snacks', '🍟'], ['Beverages', 'beverages', '🥤'], ['Healthy', 'healthy', '🥗'], ['Desserts', 'desserts', '🍰']] as const;
 const testimonials = [['Verified student stories', 'Reviews will appear here when the campus review module launches.', 'Coming Soon'], ['Fresh feedback, soon', 'We are keeping this space ready for real, verified student voices.', 'Coming Soon'], ['Built around your break', 'Order history and feedback will make every campus meal better.', 'Coming Soon']] as const;
 

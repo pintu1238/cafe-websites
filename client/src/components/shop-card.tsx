@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { Shop } from '../types/api';
 import { Badge } from './ui/badge';
 import { FavoriteButton } from './favorite-button';
+import { getImageUrl } from '../lib/image-url';
 
 const fallbackImage = 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&q=80';
 
@@ -10,7 +11,7 @@ export function ShopCard({ shop }: { shop: Shop }) {
   const hours = shop.openingTime && shop.closingTime ? `${shop.openingTime.slice(0, 5)} – ${shop.closingTime.slice(0, 5)}` : 'Campus hours';
   const price = shop.priceRange === 'BUDGET' ? '₹' : shop.priceRange === 'PREMIUM' ? '₹₹₹' : '₹₹';
   return <article className="group overflow-hidden rounded-[2rem] border border-espresso/10 bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft">
-    <div className="relative h-52 overflow-hidden bg-oat"><img src={shop.bannerUrl ?? fallbackImage} alt={`${shop.name} cafeteria`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+    <div className="relative h-52 overflow-hidden bg-oat"><img src={getImageUrl(shop.bannerUrl ?? fallbackImage)} alt={`${shop.name} cafeteria`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
       <div className="absolute left-4 top-4"><Badge tone={shop.isOpen ? 'success' : 'neutral'}>{shop.isOpen ? 'Open now' : 'Closed'}</Badge></div>
       <div className="absolute right-4 top-4"><FavoriteButton shopId={shop.id} initial={Boolean(shop.isFavorite)} compact /></div>
     </div>

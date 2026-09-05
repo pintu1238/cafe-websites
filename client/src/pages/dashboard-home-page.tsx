@@ -4,11 +4,12 @@ import { useAuth } from '../features/auth/auth-provider';
 import { useAddCartItem } from '../features/cart/hooks';
 import { useShop, useShops } from '../features/shops/hooks';
 import { formatRupees } from '../lib/utils';
+import { unsplashImage } from '../lib/image-url';
 import type { MenuItem } from '../types/api';
 import { DashboardCafeteriaCard, type DashboardCafeteria } from '../components/dashboard-cafeteria-card';
 import { DashboardFoodCard } from '../components/dashboard-food-card';
 
-const image = (id: string, width = 1000) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=86`;
+const image = unsplashImage;
 const categories = [['All', 'all', '◈'], ['North Indian', 'north-indian', '🥘'], ['South Indian', 'south-indian', '🍲'], ['Chinese', 'chinese', '🍜'], ['Snacks', 'snacks', '🍟'], ['Beverages', 'beverages', '🥤'], ['Healthy', 'healthy', '🥗'], ['Desserts', 'desserts', '🍰']] as const;
 const fallbackCafeterias: DashboardCafeteria[] = [
   { name: 'Bite Box', slug: 'bite-box', imageUrl: image('photo-1552566626-52f8b828add9'), isOpen: true, rating: '4.6', reviews: '320', cuisine: 'North Indian · Chinese', hours: '8:00 AM – 9:00 PM', distance: '2 mins away', live: false },
