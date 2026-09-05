@@ -793,3 +793,56 @@ button { cursor: pointer; }
 /* Keep the hero search as a mobile affordance; the desktop header owns search. */
 .home-hero .hero-search-wrap { display: none; }
 @media (max-width: 767px) { .home-hero .hero-search-wrap { display: flex; } }
+
+/* Shared mobile shell: applies to both requested mobile tiers */
+@media (max-width: 575px) {
+  .cafe-app { grid-template-columns: minmax(0, 1fr); }
+  .cafe-sidebar { position: fixed; left: 0; width: 235px; transform: translateX(-105%); transition: transform 200ms ease; }
+  .cafe-sidebar.is-open { transform: translateX(0); box-shadow: 16px 0 35px rgba(19,41,29,0.17); }
+  .cafe-sidebar-close, .cafe-menu-button { display: inline-flex; }
+  .cafe-campus, .cafe-user > span:last-child { display: none; }
+  .cafe-header { gap: 0.55rem; padding-inline: var(--shell-gutter); }
+  .cafe-global-search { flex: 1; }
+  .cafe-menu-layout { grid-template-columns: 1fr; }
+  .cafe-category-column { order: 1; }
+  .cafe-menu-column { order: 2; }
+  .cafe-order-column { order: 3; }
+  .cafe-category-card nav { display: flex; overflow-x: auto; gap: 0.35rem; }
+  .cafe-category-card nav button { min-width: 7rem; flex: 0 0 auto; }
+  .cafe-category-card h2, .cafe-love-card { display: none; }
+  .cafe-menu-toolbar { display: grid; }
+  .cafe-filter-chips { display: flex; overflow-x: auto; }
+  .cafe-filter-chips button { flex: 0 0 auto; }
+  .cafe-food-grid { grid-template-columns: 1fr; }
+  .cafe-order-stack { position: static; grid-template-columns: 1fr; }
+  .cafe-mobile-nav { position: fixed; right: 0; bottom: 0; left: 0; z-index: 55; display: flex; justify-content: space-around; border-top: 1px solid #e1e9e2; background: rgba(255,255,255,0.97); padding: 0.55rem 0.8rem calc(0.55rem + env(safe-area-inset-bottom)); backdrop-filter: blur(18px); }
+  .cafe-mobile-nav a { display: flex; flex-direction: column; align-items: center; gap: 0.18rem; color: #728078; font-size: 0.55rem; font-weight: 700; text-decoration: none; }
+  .cafe-mobile-nav a.active { color: #0b6942; }
+  .cafe-mobile-order { position: fixed; right: 0.8rem; bottom: 4.25rem; left: 0.8rem; z-index: 50; display: flex; align-items: center; gap: 0.55rem; border-radius: 0.7rem; background: #0b4b32; padding: 0.72rem 0.8rem; color: #fff; box-shadow: 0 10px 25px rgba(10,50,30,0.22); font-size: 0.68rem; }
+  .cafe-mobile-order > span { flex: 1; }
+  .cafe-mobile-order a { display: inline-flex; align-items: center; gap: 0.25rem; color: #fff; font-size: 0.65rem; font-weight: 800; text-decoration: none; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .cafe-menu-layout, .cafe-category-column, .cafe-menu-column, .cafe-order-column { min-width: 0; }
+  .cafe-menu-toolbar { flex-wrap: wrap; }
+  .cafe-menu-search { flex: 1 1 100%; }
+  .cafe-filter-chips { margin-left: auto; }
+}
+
+@media (max-width: 767px) {
+  .cafe-menu-layout, .cafe-category-column, .cafe-menu-column, .cafe-order-column { min-width: 0; }
+}
+
+/* Final responsive contract: keep the requested tiers explicit for shared layouts. */
+@media (min-width: 1680px) and (max-width: 1919px) { :root { --shell-gutter: 2.8rem; } .hero-grid { gap: 4rem; } }
+@media (min-width: 1600px) and (max-width: 1679px) { :root { --shell-gutter: 2.4rem; } .hero-grid { gap: 3.6rem; } }
+@media (min-width: 1400px) and (max-width: 1599px) { :root { --shell-gutter: 2rem; } .hero-grid { gap: 3.25rem; } }
+@media (min-width: 1300px) and (max-width: 1399px) { :root { --shell-gutter: 1.6rem; } .hero-grid { gap: 2.5rem; } }
+@media (min-width: 1200px) and (max-width: 1299px) { :root { --shell-gutter: 1.2rem; } .hero-grid { gap: 2rem; } }
+@media (min-width: 992px) and (max-width: 1199px) { :root { --shell-gutter: 1rem; } .hero-grid { gap: 1.5rem; } }
+@media (min-width: 768px) and (max-width: 991px) { :root { --shell-gutter: 0.9rem; } .hero-grid { gap: 1rem; } }
+@media (min-width: 576px) and (max-width: 767px) { :root { --shell-gutter: 0.8rem; } .hero-grid { display: block; } }
+@media (min-width: 361px) and (max-width: 575px) { :root { --shell-gutter: 0.7rem; } .hero-grid { display: block; } }
+@media (max-width: 360px) { :root { --shell-gutter: 0.65rem; } .hero-grid { display: block; } }
+@media (max-width: 320px) { :root { --shell-gutter: 0.6rem; } .hero-grid { display: block; } }
