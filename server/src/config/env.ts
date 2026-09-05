@@ -4,6 +4,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
   CLIENT_ORIGIN: z.string().url().default('http://localhost:5173'),
+  SERVER_ORIGIN: z.string().url().default('http://localhost:4000'),
   DATABASE_URL: z.string().min(1),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters.'),
   JWT_EXPIRES_IN: z.string().default('2h'),
@@ -25,6 +26,7 @@ export type AppConfig = {
   nodeEnv: 'development' | 'test' | 'production';
   port: number;
   clientOrigin: string;
+  serverOrigin: string;
   databaseUrl: string;
   jwtSecret: string;
   jwtExpiresIn: string;
@@ -46,6 +48,7 @@ export const defaultAppConfig: AppConfig = {
   nodeEnv: 'test',
   port: 4000,
   clientOrigin: 'http://localhost:5173',
+  serverOrigin: 'http://localhost:4000',
   databaseUrl: '',
   jwtSecret: 'test-only-secret-that-is-long-enough-123456',
   jwtExpiresIn: '2h',
@@ -69,6 +72,7 @@ export function getEnv(input: NodeJS.ProcessEnv = process.env): AppConfig {
     nodeEnv: parsed.NODE_ENV,
     port: parsed.PORT,
     clientOrigin: parsed.CLIENT_ORIGIN,
+    serverOrigin: parsed.SERVER_ORIGIN,
     databaseUrl: parsed.DATABASE_URL,
     jwtSecret: parsed.JWT_SECRET,
     jwtExpiresIn: parsed.JWT_EXPIRES_IN,

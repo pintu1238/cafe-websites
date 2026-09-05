@@ -70,7 +70,7 @@ export class AuthService {
     const verification = createEmailVerificationToken();
     const expiresAt = new Date(Date.now() + this.config.emailVerificationTtlMinutes * 60 * 1000);
     await this.users.createEmailVerification({ userId: user.id, tokenHash: verification.tokenHash, expiresAt });
-    const verificationUrl = `${this.config.clientOrigin.replace(/\/$/, '')}/verify-email?token=${encodeURIComponent(verification.rawToken)}`;
+    const verificationUrl = `${this.config.serverOrigin.replace(/\/$/, '')}/api/v1/auth/verify-email?token=${encodeURIComponent(verification.rawToken)}`;
     await this.mailer.sendEmailVerificationEmail({
       to: user.email,
       fullName: user.fullName,
@@ -169,7 +169,7 @@ export class AuthService {
     const verification = createEmailVerificationToken();
     const expiresAt = new Date(Date.now() + this.config.emailVerificationTtlMinutes * 60 * 1000);
     await this.users.createEmailVerification({ userId: user.id, tokenHash: verification.tokenHash, expiresAt });
-    const verificationUrl = `${this.config.clientOrigin.replace(/\/$/, '')}/verify-email?token=${encodeURIComponent(verification.rawToken)}`;
+    const verificationUrl = `${this.config.serverOrigin.replace(/\/$/, '')}/api/v1/auth/verify-email?token=${encodeURIComponent(verification.rawToken)}`;
     await this.mailer.sendEmailVerificationEmail({
       to: user.email,
       fullName: user.fullName,

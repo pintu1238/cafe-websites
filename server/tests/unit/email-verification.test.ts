@@ -103,7 +103,7 @@ describe('email verification service', () => {
     expect(result.user).not.toHaveProperty('passwordHash');
     expect(fixture.sent).toHaveLength(1);
     expect(fixture.sent[0].to).toBe('new.student@example.test');
-    expect(fixture.sent[0].verificationUrl).toMatch(/^http:\/\/localhost:5173\/verify-email\?token=[a-f0-9]{64}$/);
+    expect(fixture.sent[0].verificationUrl).toMatch(/^http:\/\/localhost:4000\/api\/v1\/auth\/verify-email\?token=[a-f0-9]{64}$/);
     expect(fixture.getVerification()?.tokenHash).toBe(hashEmailVerificationSecret(new URL(fixture.sent[0].verificationUrl).searchParams.get('token')!));
   });
 

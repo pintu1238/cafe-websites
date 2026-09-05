@@ -2,7 +2,7 @@
 
 1. Install Node.js 22+ and npm 10+.
 2. Run `npm install` from the repository root.
-3. Copy `.env.example` to `.env` and set `DATABASE_URL`, `JWT_SECRET`, `SMTP_USER`, and `SMTP_PASS`.
+3. Copy `.env.example` to `.env` and set `DATABASE_URL`, `JWT_SECRET`, `SMTP_USER`, and `SMTP_PASS`. Keep `SERVER_ORIGIN` aligned with the API URL used in verification emails.
 4. Apply `database/schema.sql` to Supabase PostgreSQL; it includes the base schema and authentication extensions migration.
 5. Apply `database/seed.sql` only in a development database.
 6. Run `npm run dev`. The API checks the PostgreSQL connection before it starts listening.
