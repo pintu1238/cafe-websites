@@ -1,3 +1,4 @@
+import path from 'node:path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express, { type RequestHandler, type Router } from 'express';
@@ -19,6 +20,7 @@ export type CreateAppOptions = {
   config?: AppConfig;
   apiRouter?: Router;
   database?: Queryable;
+  staticDir?: string;
 };
 
 export function createApp(options: CreateAppOptions = {}) {
@@ -77,6 +79,22 @@ export function createApp(options: CreateAppOptions = {}) {
 
   if (options.apiRouter) {
     app.use('/api/v1', options.apiRouter);
+  }
+
+  if (options.staticDir) {
+    app.use(express.static(options.staticDir));
+    app.use((request, response, next) => {
+      if (request.path.startsWith('/api/v1')) {
+        next();
+        return;
+      }
+
+      response.sendFile(path.join(options.staticDir!, 'index.html'), (error) => {
+        if (error) {
+          next(error);
+        }
+      });
+    });
   }
 
   app.use(notFound);
