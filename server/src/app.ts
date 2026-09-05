@@ -1,8 +1,8 @@
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express, { type Router } from 'express';
-import rateLimit from 'express-rate-limit';
-import helmet from 'helmet';
+import * as rateLimitModule from 'express-rate-limit';
+import * as helmetModule from 'helmet';
 import { pinoHttp } from 'pino-http';
 import { defaultAppConfig, type AppConfig } from './config/env.js';
 import type { Queryable } from './config/database.js';
@@ -11,6 +11,9 @@ import { errorHandler } from './middleware/error-handler.js';
 import { notFound } from './middleware/not-found.js';
 import { requestId } from './middleware/request-id.js';
 import { logger } from './utils/logger.js';
+
+const rateLimit = rateLimitModule.default;
+const helmet = helmetModule.default;
 
 export type CreateAppOptions = {
   config?: AppConfig;
