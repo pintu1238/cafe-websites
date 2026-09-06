@@ -46,4 +46,29 @@ describe('Vercel application adapter', () => {
     expect(assetResponse.status).toBe(200);
     expect(assetResponse.text).toContain('cafeteria-asset-fixture');
   });
+
+  test.each(['/', '/index.html', '/cafeterias'])('does not reuse stale deployment HTML for %s', async (route) => {
+    const app = createVercelApp({
+      config: { ...defaultAppConfig, databaseUrl: 'postgresql://localhost/cafeteria' },
+      pool: { query: async () => ({ rows: [], rowCount: 1 }) } as unknown as Pool,
+      staticDir: path.resolve('tests/fixtures/static'),
+    });
+
+    const first = await request(app).get(route);
+    const revalidated = await request(app).get(route)
+      .set('If-None-Match', first.headers.etag ?? 'W/"previous-deployment"');
+
+    // Vercel can preserve file size and timestamps between different builds.
+    // A file-stat validator must not keep an HTML shell pointing at old bundles.
+    expect(revalidated.status).toBe(200);
+    expect(revalidated.text).toContain('cafeteria-spa-fixture');
+    expect(revalidated.headers['cache-control']).toBe('no-store');
+    expect(revalidated.headers.etag).toBeUndefined();
+    expect(revalidated.headers['last-modified']).toBeUndefined();
+
+    const modifiedSince = await request(app).get(route)
+      .set('If-Modified-Since', first.headers['last-modified'] ?? new Date().toUTCString());
+    expect(modifiedSince.status).toBe(200);
+    expect(modifiedSince.text).toContain('cafeteria-spa-fixture');
+  });
 });

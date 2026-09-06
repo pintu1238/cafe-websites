@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express, { type RequestHandler, type Router } from 'express';
@@ -88,6 +89,18 @@ export function createApp(options: CreateAppOptions = {}) {
   }
 
   if (options.staticDir) {
+    const serveSpa: RequestHandler = async (_request, response) => {
+      const html = await readFile(path.join(options.staticDir!, 'index.html'));
+      // Build archives can share file size and mtime even when bundles change.
+      // Avoid sendFile's stat validators without changing API or asset caching.
+      response.set({
+        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Length': String(html.length),
+        'Cache-Control': 'no-store',
+      }).end(html);
+    };
+
+    app.get(['/', '/index.html'], serveSpa);
     app.use(express.static(options.staticDir));
     app.use((request, response, next) => {
       if (request.path.startsWith('/api/v1')) {
@@ -95,11 +108,7 @@ export function createApp(options: CreateAppOptions = {}) {
         return;
       }
 
-      response.sendFile(path.join(options.staticDir!, 'index.html'), (error) => {
-        if (error) {
-          next(error);
-        }
-      });
+      return serveSpa(request, response, next);
     });
   }
 
