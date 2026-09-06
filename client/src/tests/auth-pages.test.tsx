@@ -29,12 +29,12 @@ describe('authentication pages', () => {
 
   test('offers Google authentication and password recovery from both auth entry points', () => {
     const { unmount } = render(<MemoryRouter><LoginPage /></MemoryRouter>);
-    expect(screen.getByRole('link', { name: /continue with google/i })).toHaveAttribute('href', expect.stringContaining('/auth/google'));
+    expect(screen.getByRole('link', { name: /sign in with google/i })).toHaveAttribute('href', expect.stringContaining('/auth/google'));
     expect(screen.getByRole('link', { name: /forgot password/i })).toHaveAttribute('href', '/forgot-password');
     unmount();
 
     render(<MemoryRouter><RegisterPage /></MemoryRouter>);
-    expect(screen.getByRole('link', { name: /continue with google/i })).toHaveAttribute('href', expect.stringContaining('/auth/google'));
+    expect(screen.getByRole('link', { name: /sign up with google/i })).toHaveAttribute('href', expect.stringContaining('/auth/google'));
   });
 
   test('requests a reset and verifies the code before navigating to the reset form', async () => {

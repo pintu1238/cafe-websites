@@ -11,7 +11,10 @@ export async function register(input: AuthInput) {
 }
 export async function login(input: Pick<AuthInput, 'email' | 'password'>) { return authUser(await http.post('/auth/login', input)); }
 export async function logout() { return apiData<{ loggedOut: boolean }>(await http.post('/auth/logout')); }
-export async function me() { return authUser(await http.get('/auth/me')); }
+export async function me() {
+  const data = apiData<{ user: User | null }>(await http.get('/auth/me'));
+  return data.user;
+}
 export async function forgotPassword(input: Pick<AuthInput, 'email'>) { return apiData<{ accepted: boolean }>(await http.post('/auth/forgot-password', input)); }
 export async function verifyResetCode(input: { email: string; code: string }) { return apiData<{ resetToken: string }>(await http.post('/auth/verify-reset-code', input)); }
 export async function resetPassword(input: { token: string; password: string }) { return apiData<{ reset: boolean }>(await http.post('/auth/reset-password', input)); }

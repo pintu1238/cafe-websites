@@ -373,6 +373,7 @@ This sequencing lets an institution buy a useful product now while retaining a c
 - [Architecture overview](docs/architecture.md)
 - [Local setup guide](docs/setup.md)
 - [Database schema](database/schema.sql)
+- [Development seed data](database/seed.sql)
 - [Client application](client/)
 - [Server application](server/)
 

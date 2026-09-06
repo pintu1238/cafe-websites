@@ -14,6 +14,8 @@ import { createShopRouter } from './shop-routes.js';
 import { createShopkeeperRouter } from './shopkeeper-routes.js';
 import { createDiscoveryRouter } from './discovery-routes.js';
 import { createContentRouter } from './content-routes.js';
+import { createEnquiryRouter } from './enquiry-routes.js';
+import { PgEnquiryRepository } from '../repositories/enquiry-repository.js';
 import { createImageRouter } from './image-routes.js';
 import { AuthService } from '../services/auth-service.js';
 import { SmtpMailer } from '../services/mailer.js';
@@ -34,6 +36,7 @@ export function createApiRouter(input: { pool: Pool; config: AppConfig }) {
   router.use('/shops', createShopRouter({ service: shopService, users, config: input.config }));
   router.use('/', createDiscoveryRouter({ service: new DiscoveryService(discovery), users, config: input.config }));
   router.use('/content', createContentRouter());
+  router.use('/enquiries', createEnquiryRouter(new PgEnquiryRepository(input.pool)));
   router.use('/images', createImageRouter());
   router.use('/cart', createCartRouter({ carts, users, config: input.config }));
   router.use('/orders', createOrderRouter({ orders, users, config: input.config }));

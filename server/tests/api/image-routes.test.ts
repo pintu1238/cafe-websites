@@ -40,6 +40,7 @@ describe('image proxy route', () => {
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toContain('image/jpeg');
     expect(response.headers['cache-control']).toContain('immutable');
+    expect(response.headers['cross-origin-resource-policy']).toBe('cross-origin');
     expect(Buffer.from(response.body).equals(Buffer.from([1, 2, 3]))).toBe(true);
   });
 });

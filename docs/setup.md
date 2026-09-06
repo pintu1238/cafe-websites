@@ -19,6 +19,12 @@ npm run build
 
 The live demo accounts are documented in the root README and should be replaced before production deployment.
 
+## Public pages and enquiry forms
+
+Existing installations must also apply `database/migrations/005_public_enquiries.sql` before deploying the public-page changes. Run `node scripts/migrate-public-enquiries.mjs` from the repository root with the target database configured. New schema installations include this migration.
+
+See [Public pages operations](public-pages.md) for request follow-up, privacy boundaries and the transactional browser audit.
+
 ## Google sign-in and Gmail password recovery
 
 Create a Google OAuth 2.0 Web application client and add this exact local redirect URI:

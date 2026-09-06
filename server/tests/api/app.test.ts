@@ -16,7 +16,7 @@ describe('Express API foundation', () => {
     const response = await request(createApp()).get('/api/v1/health');
 
     expect(response.headers['content-security-policy']).toContain(
-      "img-src 'self' data: https://images.unsplash.com",
+      "img-src 'self' data: https://images.unsplash.com https://*.googleusercontent.com",
     );
   });
 

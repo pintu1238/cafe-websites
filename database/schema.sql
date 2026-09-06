@@ -3,3 +3,4 @@
 \i migrations/002_authentication_extensions.sql
 \i migrations/003_email_verification.sql
 \i migrations/004_cafeteria_discovery.sql
+\i migrations/005_public_enquiries.sql

@@ -96,7 +96,8 @@ describe('authentication routes', () => {
     expect(register.headers['set-cookie']).toBeUndefined();
 
     const me = await agent.get('/api/v1/auth/me');
-    expect(me.status).toBe(401);
+    expect(me.status).toBe(200);
+    expect(me.body).toEqual({ success: true, data: { user: null } });
 
     const logout = await agent.post('/api/v1/auth/logout');
     expect(logout.status).toBe(200);

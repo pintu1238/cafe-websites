@@ -32,7 +32,7 @@ export function createApp(options: CreateAppOptions = {}) {
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
-        imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'],
+        imgSrc: ["'self'", 'data:', 'https://images.unsplash.com', 'https://*.googleusercontent.com'],
       },
     },
   }));

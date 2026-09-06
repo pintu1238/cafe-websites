@@ -25,3 +25,20 @@ export function authenticate(users: UserRepository, config: AppConfig): RequestH
     }
   };
 }
+
+export function optionalAuthenticate(users: UserRepository, config: AppConfig): RequestHandler {
+  return async (request, _response, next) => {
+    try {
+      const token = request.cookies?.[AUTH_COOKIE];
+      if (token) {
+        const claims = verifyAuthToken(token, config);
+        const user = await users.findById(claims.sub);
+        if (user?.isActive) request.auth = { userId: user.id, role: user.role };
+      }
+    } catch (error) {
+      if (!(error instanceof AppError) || error.code !== 'UNAUTHORIZED') throw error;
+      // An expired or invalid session is treated as anonymous for /auth/me.
+    }
+    next();
+  };
+}

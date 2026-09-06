@@ -71,7 +71,8 @@ export function createAuthController(service: AuthService, config: AppConfig, go
     },
     me: async (request: Request, response: Response) => {
       if (!request.auth) {
-        throw new AppError('UNAUTHORIZED', 'Please sign in to continue.', 401);
+        response.json({ success: true, data: { user: null } });
+        return;
       }
       const user = await service.me(request.auth.userId);
       response.json({ success: true, data: { user } });

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { AppConfig } from '../config/env.js';
-import { authenticate } from '../middleware/authenticate.js';
+import { optionalAuthenticate } from '../middleware/authenticate.js';
 import { validate } from '../middleware/validate.js';
 import type { UserRepository } from '../types/domain.js';
 import { forgotPasswordSchema, loginSchema, registerSchema, resendVerificationSchema, resetPasswordSchema, verifyResetCodeSchema } from '../validators/auth.js';
@@ -23,6 +23,6 @@ export function createAuthRouter(input: { service: AuthService; users: UserRepos
   router.get('/verify-email', controller.verifyEmail);
   router.post('/resend-verification', validate(resendVerificationSchema), controller.resendVerification);
   router.post('/logout', controller.logout);
-  router.get('/me', authenticate(input.users, input.config), controller.me);
+  router.get('/me', optionalAuthenticate(input.users, input.config), controller.me);
   return router;
 }

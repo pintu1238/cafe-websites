@@ -48,7 +48,7 @@ export function createImageRouter() {
       response.set({
         'Cache-Control': 'public, max-age=31536000, immutable',
         'Content-Type': contentType,
-        'Cross-Origin-Resource-Policy': 'same-origin',
+        'Cross-Origin-Resource-Policy': 'cross-origin',
       });
       response.send(Buffer.from(await upstream.arrayBuffer()));
     } catch (error) {

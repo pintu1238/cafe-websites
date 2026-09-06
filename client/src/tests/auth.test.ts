@@ -24,4 +24,10 @@ describe('auth API', () => {
     await expect(me()).resolves.toEqual(user);
     expect(request).toHaveBeenCalledWith('/auth/me');
   });
+
+  test('treats an anonymous session as a valid empty auth response', async () => {
+    vi.spyOn(http, 'get').mockResolvedValueOnce({ data: { data: { user: null } } } as never);
+
+    await expect(me()).resolves.toBeNull();
+  });
 });

@@ -8,6 +8,7 @@ import {
 import { Link, NavLink, useParams } from 'react-router-dom';
 import { BrandMark } from '../components/brand-mark';
 import { Footer } from '../components/footer';
+import { ProfileAvatar } from '../components/profile-avatar';
 import { useAuth } from '../features/auth/auth-provider';
 import { useAddCartItem, useCart } from '../features/cart/hooks';
 import { clearCart, removeCartItem, updateCartItem } from '../api/cart';
@@ -104,7 +105,7 @@ function CafeSidebar({ open, onClose }: { open: boolean; onClose: () => void }) 
 
 function CafeHeader({ cartCount, onMenuOpen }: { cartCount: number; onMenuOpen: () => void }) {
   const { user } = useAuth(); const [query, setQuery] = useState(''); const firstName = typeof user?.fullName === 'string' && user.fullName.trim() ? user.fullName.trim().split(/\s+/)[0] : 'Account';
-  return <header className="cafe-header"><button type="button" className="cafe-menu-button" onClick={onMenuOpen} aria-label="Open navigation"><MenuIcon size={20} /></button><form className="cafe-global-search" onSubmit={(event) => event.preventDefault()}><Search size={17} /><input aria-label="Search for food, cafeterias, or cuisines" placeholder="Search for food, cafeterias, or cuisines..." value={query} onChange={(event) => setQuery(event.target.value)} /><button type="submit" aria-label="Search"><Search size={16} /></button></form><div className="cafe-header-actions"><button className="cafe-campus" type="button"><MapPin size={18} /><span><b>Your Campus</b><small>Main Campus</small></span><ChevronDown size={14} /></button><Link to="/cart" className="cafe-header-cart" aria-label={`Cart with ${cartCount} items`}><ShoppingBag size={20} />{cartCount > 0 && <b>{cartCount}</b>}</Link><Link to={user ? '/notifications' : '/login'} className="cafe-user"><span className="cafe-avatar">{user?.profileImageUrl ? <img src={user.profileImageUrl} alt="" /> : firstName.slice(0, 1)}</span><span><b>Hi, {firstName}</b><small>Student</small></span></Link></div></header>;
+  return <header className="cafe-header"><button type="button" className="cafe-menu-button" onClick={onMenuOpen} aria-label="Open navigation"><MenuIcon size={20} /></button><form className="cafe-global-search" onSubmit={(event) => event.preventDefault()}><Search size={17} /><input aria-label="Search for food, cafeterias, or cuisines" placeholder="Search for food, cafeterias, or cuisines..." value={query} onChange={(event) => setQuery(event.target.value)} /><button type="submit" aria-label="Search"><Search size={16} /></button></form><div className="cafe-header-actions"><button className="cafe-campus" type="button"><MapPin size={18} /><span><b>Your Campus</b><small>Main Campus</small></span><ChevronDown size={14} /></button><Link to="/cart" className="cafe-header-cart" aria-label={`Cart with ${cartCount} items`}><ShoppingBag size={20} />{cartCount > 0 && <b>{cartCount}</b>}</Link><Link to={user ? '/notifications' : '/login'} className="cafe-user"><ProfileAvatar className="cafe-avatar" imageUrl={user?.profileImageUrl} fallback={firstName.slice(0, 1)} /><span><b>Hi, {firstName}</b><small>Student</small></span></Link></div></header>;
 }
 
 function Hero({ shop, isBiteBox, favorite, onFavorite, onShare }: { shop: Shop; isBiteBox: boolean; favorite: boolean; onFavorite: () => void; onShare: () => void }) {

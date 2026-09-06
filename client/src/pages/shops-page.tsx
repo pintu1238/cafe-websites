@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, ChevronDown, Filter, SlidersHorizontal, X } from 'lucide-react';
+import { Check, ChevronDown, Clock3, Filter, MapPin, SlidersHorizontal, Star, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { SearchBar } from '../components/search-bar';
 import { ShopCard } from '../components/shop-card';
@@ -60,9 +60,21 @@ export function ShopsPage() {
     setSearch(''); setDebounced(''); setCategory(''); setOpenOnly(false); setMinRating(''); setMaxDistanceKm(''); setPriceRange(undefined); setOffersOnly(false); setSort('popular');
   };
   const activeFilterCount = [category, openOnly, minRating, maxDistanceKm, priceRange, offersOnly].filter(Boolean).length;
+  const visibleShops = shops.data?.items ?? [];
+  const openShopCount = visibleShops.filter((shop) => shop.isOpen).length;
+  const averageRating = visibleShops.length ? (visibleShops.reduce((sum, shop) => sum + shop.rating, 0) / visibleShops.length).toFixed(1) : '—';
+  const quickestPrep = visibleShops.length ? `${Math.min(...visibleShops.map((shop) => shop.estimatedPreparationTime))} min` : '—';
 
   return <div className="discovery-page section-shell py-10 sm:py-14">
     <div className="max-w-3xl"><p className="eyebrow">Explore campus</p><h1 className="mt-3 font-display text-5xl text-espresso sm:text-6xl">Find your next meal.</h1><p className="mt-4 text-base leading-7 text-muted">Search cafeterias, compare what is open, and find the right meal for your campus day.</p></div>
+    <section className="discovery-overview mt-7" aria-label="Campus dining overview">
+      <div className="discovery-overview-copy"><span className="discovery-overview-kicker">Campus dining directory</span><h2>Every campus table, clearly organised.</h2><p>Use the same quick scan you expect from a modern operations workspace: see what is open, compare trust signals, and move straight to the menu.</p></div>
+      <dl className="discovery-overview-stats">
+        <div><dt><MapPin size={15} /> Open now</dt><dd>{shops.isLoading ? '—' : openShopCount}</dd><span>ready for pickup</span></div>
+        <div><dt><Star size={15} /> Avg. rating</dt><dd>{shops.isLoading ? '—' : averageRating}</dd><span>student rated</span></div>
+        <div><dt><Clock3 size={15} /> Quickest prep</dt><dd>{shops.isLoading ? '—' : quickestPrep}</dd><span>when time is tight</span></div>
+      </dl>
+    </section>
     <section className="mt-8 rounded-[1.75rem] border border-espresso/10 bg-white p-4 shadow-card sm:p-5" aria-label="Cafeteria filters">
       <div className="discovery-toolbar">
         <SearchBar value={search} onChange={(event) => setSearch(event.target.value)} aria-label="Search cafeterias, food, or locations" />
