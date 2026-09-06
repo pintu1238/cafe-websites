@@ -30,6 +30,23 @@ function setup(path: string) {
   return render(<QueryClientProvider client={queryClient}><MemoryRouter initialEntries={[path]}><AuthProvider><Routes><Route path="/menu" element={<MenuPage />} /><Route path="/vendor/login" element={<VendorLoginPage />} /><Route path="/login" element={<LoginDestination />} /><Route path="/shopkeeper" element={<h1>Vendor order board</h1>} /></Routes></AuthProvider></MemoryRouter></QueryClientProvider>);
 }
 describe('campus menu flows', () => {
+  test('uses an animated cafeteria picker and keeps search focus on the outer surface', async () => {
+    setup('/menu');
+    const picker = await screen.findByRole('combobox', { name: 'Cafeteria' });
+
+    expect(picker).toHaveAttribute('aria-expanded', 'false');
+    expect(document.querySelector('.portal-menu-toolbar select')).not.toBeInTheDocument();
+
+    await userEvent.click(picker);
+    expect(picker).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('listbox')).toHaveClass('is-open');
+    expect(screen.getByRole('option', { name: 'Campus Cafe' })).toHaveAttribute('aria-selected', 'true');
+
+    await userEvent.click(screen.getByRole('option', { name: 'Campus Cafe' }));
+    expect(picker).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('searchbox', { name: 'Search menu' })).toHaveClass('portal-search-input');
+  });
+
   test('combines vegetarian and search filters, then clears an empty result', async () => {
     setup('/menu'); await screen.findByRole('heading', { name: 'Veg bowl' });
     await userEvent.click(screen.getByLabelText('Vegetarian only'));

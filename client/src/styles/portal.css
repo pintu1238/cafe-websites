@@ -53,7 +53,8 @@
 .portal .portal-quick-links span { font-size:13px; color:#657368; }
 .portal .portal-faq { max-width:900px; margin-inline:auto; }
 .portal .portal-search { display:flex; align-items:center; gap:10px; border:1px solid #d4ddd2; border-radius:10px; padding:4px 15px; background:white; }
-.portal .portal-search input { border:0; background:transparent; }
+.portal .portal-search input,.portal .portal-search input:focus { border:0; background:transparent; outline:0; box-shadow:none; }
+.portal .portal-search:focus-within { border-color:#55875d; box-shadow:0 0 0 3px #dcebd5; }
 .portal .portal-faq details { border-bottom:1px solid #e0e6dc; background:white; padding:20px 24px; }
 .portal .portal-faq summary { cursor:pointer; font-size:16px; font-weight:700; color:#294c34; padding-right:12px; }
 .portal .portal-faq details p { font-size:14px; line-height:1.8; margin-top:15px; color:#586b5f; }
@@ -88,6 +89,22 @@
 .portal .portal-bottom-cta p { font-size:13px; color:#667365; }
 .portal .portal-actions { display:flex; gap:12px; flex-wrap:wrap; }
 .portal .portal-menu-toolbar { display:grid; grid-template-columns:1fr 1.5fr auto; gap:20px; align-items:end; margin-bottom:22px; }
+.portal .portal-field { position:relative; display:grid; gap:8px; min-width:0; color:#314c3a; font-size:13px; font-weight:600; }
+.portal .portal-field-label { display:block; }
+.portal .portal-cafeteria-trigger { display:flex; width:100%; min-width:0; align-items:center; justify-content:space-between; gap:14px; border:1px solid #d4ddd2; border-radius:13px; background:linear-gradient(135deg,#ffffff 0%,#f8fbf6 100%); padding:12px 14px; color:#243e2f; font:inherit; font-size:14px; line-height:1.5; text-align:left; cursor:pointer; transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease; }
+.portal .portal-cafeteria-trigger:hover { border-color:#9fbea2; box-shadow:0 8px 18px rgba(32,83,50,.08); transform:translateY(-1px); }
+.portal .portal-cafeteria-trigger:focus-visible { border-color:#55875d; outline:3px solid #dcebd5; outline-offset:2px; }
+.portal .portal-cafeteria-trigger[aria-expanded=true] { border-color:#55875d; box-shadow:0 0 0 3px rgba(220,235,213,.8),0 12px 24px rgba(32,83,50,.1); }
+.portal .portal-cafeteria-trigger svg { flex:0 0 auto; color:#2d6742; transition:transform .2s ease; }
+.portal .portal-cafeteria-trigger svg.is-open { transform:rotate(180deg); }
+.portal .portal-cafeteria-options { position:absolute; z-index:30; top:calc(100% + 8px); right:0; left:0; display:grid; max-height:280px; gap:3px; overflow-y:auto; padding:7px; border:1px solid #dce8d9; border-radius:16px; background:#ffffff; box-shadow:0 18px 42px rgba(25,67,40,.16); opacity:0; pointer-events:none; transform:translateY(-8px) scale(.98); transform-origin:top center; visibility:hidden; transition:opacity .18s ease,transform .18s ease,visibility .18s ease; }
+.portal .portal-cafeteria-options.is-open { opacity:1; pointer-events:auto; transform:translateY(0) scale(1); visibility:visible; }
+.portal .portal-cafeteria-option { display:flex; min-height:44px; align-items:center; justify-content:space-between; gap:12px; border-radius:11px; padding:9px 11px; color:#294c34; font-size:14px; font-weight:500; cursor:pointer; transition:background .16s ease,color .16s ease,transform .16s ease; }
+.portal .portal-cafeteria-option:hover,.portal .portal-cafeteria-option:focus-visible { background:#edf6e9; color:#174c35; outline:none; transform:translateX(2px); }
+.portal .portal-cafeteria-option.is-selected { background:#e4f1df; color:#164d34; font-weight:700; }
+.portal .portal-cafeteria-option > span { display:grid; gap:1px; min-width:0; }
+.portal .portal-cafeteria-option small { color:#7a887d; font-size:11px; font-weight:500; }
+.portal .portal-cafeteria-option > svg { flex:0 0 auto; color:#2c7a4b; }
 .portal .portal-menu-toolbar .portal-checkbox { align-self:center; }
 .portal .portal-chips { display:flex; gap:10px; overflow-x:auto; margin-bottom:26px; padding-bottom:6px; }
 .portal .portal-chips button { white-space:nowrap; border:1px solid #dbe5d5; border-radius:24px; padding:9px 17px; background:white; color:#496149; font-size:13px; }
