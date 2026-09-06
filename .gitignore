@@ -7,6 +7,8 @@ server/dist/
 .env.*
 !.env.example
 coverage/
+client/test-results/
+client/playwright-report/
 *.log
 .DS_Store
 *.tsbuildinfo
