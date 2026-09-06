@@ -60,7 +60,7 @@ describe('responsive layout tiers', () => {
     const sidebarLinkCopy = rule('.dashboard-sidebar-link > span:not(.dashboard-sidebar-badge)');
     const sidebarBrandCopy = rule('.dashboard-sidebar-brand .brand-mark-copy > span:first-child');
 
-    expect(sidebarLinkCopy).toContain('font-size: 1rem');
+    expect(sidebarLinkCopy).toContain('font-size: 0.8125rem');
     expect(sidebarLinkCopy).toContain('font-weight: 600');
     expect(sidebarLinkCopy).toContain('color: inherit');
     expect(sidebarBrandCopy).toContain('font-size: 1.375rem');

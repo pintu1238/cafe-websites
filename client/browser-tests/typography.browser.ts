@@ -32,7 +32,7 @@ async function expectReadablePage(page: Page) {
       smallText: [...body.querySelectorAll('*')].filter((element) =>
         !element.closest('svg') && visible(element) &&
         [...element.childNodes].some((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) &&
-        parseFloat(getComputedStyle(element).fontSize) < 14,
+        parseFloat(getComputedStyle(element).fontSize) < 13,
       ).map((element) => `${element.tagName}.${element.className}: ${getComputedStyle(element).fontSize}`),
       clippedTitles: [...body.querySelectorAll('h1,h2,h3,button')].filter((element) => visible(element) && element.scrollWidth > element.clientWidth + 2).map((element) => element.textContent),
       horizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
@@ -42,16 +42,18 @@ async function expectReadablePage(page: Page) {
   expect(violations.clippedTitles).toEqual([]);
   expect(violations.horizontalOverflow).toBe(false);
   for (const input of await page.locator('input:not([type="checkbox"]):not([type="radio"]),select,textarea').all()) {
-    if (await input.isVisible()) await expect(input).toHaveCSS('font-size', '16px');
+    if (await input.isVisible()) await expect(input).toHaveCSS('font-size', '13px');
   }
 }
 
-test('home keeps the same readable scale at every breakpoint', async ({ page }) => {
+test('home keeps the requested compact scale at every breakpoint', async ({ page }, testInfo) => {
   await useTestApi(page);
   await page.goto('/');
   await expect(page.locator('.dashboard-food-copy h3').first()).toBeVisible();
-  await expect(page.locator('.dashboard-food-copy h3').first()).toHaveCSS('font-size', '18px');
-  await expect(page.locator('.dashboard-sidebar-link').first()).toHaveCSS('font-size', '16px');
+  await expect(page.locator('body')).toHaveCSS('font-size', '13px');
+  await expect(page.locator('.dashboard-food-copy h3').first()).toHaveCSS('font-size', '16px');
+  await expect(page.locator('.dashboard-sidebar-link').first()).toHaveCSS('font-size', '13px');
+  await expect(page.locator('.dashboard-section-header h2').first()).toHaveCSS('font-size', testInfo.project.name === 'desktop' ? '22px' : '20px');
   await expectReadablePage(page);
 });
 
@@ -63,7 +65,7 @@ for (const path of ['/login', '/register', '/forgot-password', '/shops', '/shops
     if (path === '/shops/the-courtyard-cafe') {
       await expect(page.getByRole('heading', { name: 'Bite Box', exact: true })).toBeVisible();
       await expect(page.getByRole('heading', { name: 'Recommended for You', exact: true })).toBeVisible();
-      await expect(page.locator('.cafe-food-copy h3').first()).toHaveCSS('font-size', '18px');
+      await expect(page.locator('.cafe-food-copy h3').first()).toHaveCSS('font-size', '16px');
     }
     if (path === '/cart' || path === '/checkout') await expect(page.getByText(/Campus Club Sandwich with Extra Cheese/)).toBeVisible();
     await expectReadablePage(page);
@@ -74,6 +76,6 @@ test('operator navigation and order board stay readable', async ({ page }, testI
   await useTestApi(page, 'SHOPKEEPER');
   await page.goto('/shopkeeper');
   await expect(page.getByRole('heading', { name: 'Order board.', exact: true })).toBeVisible();
-  if (testInfo.project.name === 'desktop') await expect(page.locator('aside a').first()).toHaveCSS('font-size', '16px');
+  if (testInfo.project.name === 'desktop') await expect(page.locator('aside a').first()).toHaveCSS('font-size', '13px');
   await expectReadablePage(page);
 });

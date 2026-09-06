@@ -19,10 +19,10 @@ export default {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        xs: ['0.875rem', { lineHeight: '1.5' }],
-        sm: ['0.875rem', { lineHeight: '1.5' }],
-        base: ['1rem', { lineHeight: '1.6' }],
-        lg: ['1.125rem', { lineHeight: '1.4' }],
+        xs: ['0.8125rem', { lineHeight: '1.5' }],
+        sm: ['0.8125rem', { lineHeight: '1.5' }],
+        base: ['0.8125rem', { lineHeight: '1.6' }],
+        lg: ['1rem', { lineHeight: '1.4' }],
       },
       boxShadow: {
         soft: '0 18px 50px rgba(20, 39, 31, 0.09)',

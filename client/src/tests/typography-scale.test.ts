@@ -46,16 +46,16 @@ function fontSize(selector: string) {
 }
 
 describe('readable shared typography', () => {
-  test.each(['body', '.dashboard-sidebar-link', '.dashboard-search input', '.cafe-menu-search input', '.button-primary'])('%s renders primary text at 16px or larger', (selector) => {
-    expect(fontSize(selector)).toBeGreaterThanOrEqual(16);
+  test.each(['body', '.dashboard-sidebar-link', '.dashboard-search input', '.cafe-menu-search input', '.button-primary'])('%s renders primary text at the requested 13px', (selector) => {
+    expect(fontSize(selector)).toBe(13);
   });
 
-  test.each(['.dashboard-profile small', '.dashboard-cafe-copy p', '.cafe-food-copy p', '.dashboard-category-item strong', '.dashboard-view-all'])('%s never shrinks supporting text below 14px', (selector) => {
-    expect(fontSize(selector)).toBeGreaterThanOrEqual(14);
+  test.each(['.dashboard-profile small', '.dashboard-cafe-copy p', '.cafe-food-copy p', '.dashboard-category-item strong', '.dashboard-view-all'])('%s keeps supporting text at 13px', (selector) => {
+    expect(fontSize(selector)).toBe(13);
   });
 
-  test.each(['.dashboard-cafe-title h3', '.dashboard-food-copy h3', '.cafe-food-copy h3'])('%s keeps food and café names at a readable 18px', (selector) => {
-    expect(fontSize(selector)).toBe(18);
+  test.each(['.dashboard-cafe-title h3', '.dashboard-food-copy h3', '.cafe-food-copy h3'])('%s keeps food and café names at 16px', (selector) => {
+    expect(fontSize(selector)).toBe(16);
   });
 
   test('uses the same sans-serif family for public headings and body text', () => {
