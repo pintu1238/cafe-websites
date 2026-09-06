@@ -11,6 +11,13 @@
 .discovery-overview-stats dd { margin-top: .35rem; color: #123f2c; font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
 .discovery-overview-stats span { margin-top: .28rem; color: #71806f; font-size: .75rem; }
 .discovery-toolbar { display: grid; grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(130px, 0.55fr)); gap: .75rem; }
+.discovery-sort-control { display:flex; min-height:2.75rem; align-items:center; gap:.45rem; border:1px solid rgba(31,52,40,.1); border-radius:999px; padding:0 .75rem 0 1rem; color:#1f3428; }
+.discovery-sort-control > svg { flex:0 0 auto; color:#0b6942; }
+.discovery-sort-select { flex:1; min-width:0; }
+.discovery-sort-select .ui-dropdown-trigger { min-height:2.65rem; border:0; border-radius:999px; background:transparent; padding:.25rem 0; box-shadow:none; font-size:.875rem; }
+.discovery-sort-select .ui-dropdown-trigger:hover,.discovery-sort-select .ui-dropdown-trigger[aria-expanded=true] { border-color:transparent; box-shadow:none; transform:none; }
+.discovery-filter-field { display:grid; min-width:0; gap:.35rem; color:#1f3428; font-size:.875rem; font-weight:600; }
+.discovery-filter-field .ui-dropdown-trigger { background:#fff; font-weight:400; }
 .discovery-filter-button { min-height: 2.75rem; }
 .discovery-filter-drawer { display: contents; }
 .discovery-cuisine-rail { display: flex; gap: .55rem; overflow-x: auto; padding-bottom: .25rem; scrollbar-width: thin; }
